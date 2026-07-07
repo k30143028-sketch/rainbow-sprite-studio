@@ -289,6 +289,44 @@ function Index() {
         </div>
       </section>
 
+      {/* Food menu */}
+      <section className="mx-auto max-w-4xl px-5 py-20">
+        <div className="text-center">
+          <p className="text-sm font-semibold uppercase tracking-wider text-primary">
+            The kitchen
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Food menu</h2>
+          <p className="mt-3 text-muted-foreground">Prices in Lei (L)</p>
+        </div>
+        <div className="mt-12 space-y-12">
+          {foodMenu.map((section) => (
+            <div key={section.group}>
+              <h3 className="border-b border-border pb-3 text-xl font-semibold text-primary">
+                {section.group}
+              </h3>
+              <ul className="mt-5 space-y-6">
+                {section.items.map((item) => (
+                  <li key={item.name} className="flex flex-col gap-1">
+                    <div className="flex items-baseline justify-between gap-4">
+                      <span className="font-display text-lg font-semibold">
+                        {item.name}
+                      </span>
+                      <span className="flex shrink-0 items-baseline gap-3 text-sm">
+                        {item.grams && (
+                          <span className="text-muted-foreground">{item.grams}</span>
+                        )}
+                        <span className="font-semibold text-primary">{item.price} L</span>
+                      </span>
+                    </div>
+                    <p className="max-w-2xl text-sm text-muted-foreground">{item.desc}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Reviews */}
       <section id="reviews" className="mx-auto max-w-6xl px-5 py-20">
         <div className="text-center">
