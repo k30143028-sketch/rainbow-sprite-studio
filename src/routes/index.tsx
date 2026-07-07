@@ -56,6 +56,73 @@ const hours = [
   { day: "Sunday", time: "09:00 – 21:00" },
 ];
 
+const foodMenu = [
+  {
+    group: "Toasts",
+    items: [
+      {
+        name: "Toast Egg Me Up",
+        desc: "Grana Padano, rucola, roșii, lime, busuioc, baby spanac, muguri pin, muștar Dijon, miere, mix semințe, ouă, pâine, ulei de măsline.",
+        grams: "200 gr",
+        price: "44",
+      },
+      {
+        name: "Toast Feta Affair",
+        desc: "Ciuperci, feta oaie + capră, gălbenuș, unt 82%, lime, sos soia, mix semințe, tabasco, ouă, cimbrișor, sare Maldon, pâine, valeriană.",
+        grams: "220 gr",
+        price: "44",
+      },
+      {
+        name: "Toast Peach Perfect",
+        desc: "Burrata, piersici, prosciutto crudo, rucola, zahăr brun, Grana Padano, miere, busuioc, muguri pin, pâine, ulei de măsline, alune de pădure.",
+        grams: "170 gr",
+        price: "44",
+      },
+      {
+        name: "Toast The Royal",
+        desc: "Cremă de brânză, sfeclă prefiartă, somon afumat, unt 82%, capere, gălbenuș, lime, mărar, ouă, sare Maldon, tarhon uscat, pâine, smântână de gătit.",
+        grams: "220 gr",
+        price: "44",
+      },
+    ],
+  },
+  {
+    group: "Sandwiches & Bowls",
+    items: [
+      {
+        name: "Hummus Crunch Me Softly",
+        desc: "Năut, usturoi, conopidă, vânătă, zucchini, cartofi, lămâie, ulei de măsline, ceapă roșie, baby spanac, tabasco, miere, mix semințe, Tahini, pâine.",
+        grams: "",
+        price: "38",
+      },
+      {
+        name: "Sandwich Cheesy Business",
+        desc: "Ciuperci, cedar, ceapă roșie, cremă de brânză, emmentaler, usturoi, unt 82%, sos soia, zahăr brun, cimbrișor, sare Maldon, pâine, bere Lager.",
+        grams: "280 gr",
+        price: "37",
+      },
+      {
+        name: "Sandwich Greek Freak",
+        desc: "Halloumi, măsline, vânătă, zucchini, ulei de măsline, lămâie, iaurt, ulei floarea soarelui, mentă, sare, piper, pâine.",
+        grams: "280 gr",
+        price: "37",
+      },
+      {
+        name: "Sandwich Nuts About Crudo",
+        desc: "Burrata, prosciutto crudo, Grana Padano, roșii, rucola, busuioc, alune de pădure, muguri pin, sare Maldon, pâine.",
+        grams: "280 gr",
+        price: "35",
+      },
+      {
+        name: "Sandwich Kiss My Cotto",
+        desc: "Prosciutto cotto, emmentaler, cremă de brânză, baby spanac, usturoi, sare, piper, sare Maldon, pâine.",
+        grams: "280 gr",
+        price: "35",
+      },
+    ],
+  },
+];
+
 function Index() {
   const [form, setForm] = useState({
     name: "",
