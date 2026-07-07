@@ -279,7 +279,9 @@ function Index() {
                 </ul>
               </InfoRow>
               <InfoRow icon={<Phone className="h-5 w-5" />} title="Phone">
-                +40 700 000 000
+                <a href="tel:+40747963332" className="transition-colors hover:text-foreground">
+                  0747 963 332
+                </a>
               </InfoRow>
             </div>
           </div>
