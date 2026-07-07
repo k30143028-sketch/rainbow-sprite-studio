@@ -56,6 +56,73 @@ const hours = [
   { day: "Sunday", time: "09:00 – 21:00" },
 ];
 
+const foodMenu = [
+  {
+    group: "Toasts",
+    items: [
+      {
+        name: "Toast Egg Me Up",
+        desc: "Grana Padano, rucola, roșii, lime, busuioc, baby spanac, muguri pin, muștar Dijon, miere, mix semințe, ouă, pâine, ulei de măsline.",
+        grams: "200 gr",
+        price: "44",
+      },
+      {
+        name: "Toast Feta Affair",
+        desc: "Ciuperci, feta oaie + capră, gălbenuș, unt 82%, lime, sos soia, mix semințe, tabasco, ouă, cimbrișor, sare Maldon, pâine, valeriană.",
+        grams: "220 gr",
+        price: "44",
+      },
+      {
+        name: "Toast Peach Perfect",
+        desc: "Burrata, piersici, prosciutto crudo, rucola, zahăr brun, Grana Padano, miere, busuioc, muguri pin, pâine, ulei de măsline, alune de pădure.",
+        grams: "170 gr",
+        price: "44",
+      },
+      {
+        name: "Toast The Royal",
+        desc: "Cremă de brânză, sfeclă prefiartă, somon afumat, unt 82%, capere, gălbenuș, lime, mărar, ouă, sare Maldon, tarhon uscat, pâine, smântână de gătit.",
+        grams: "220 gr",
+        price: "44",
+      },
+    ],
+  },
+  {
+    group: "Sandwiches & Bowls",
+    items: [
+      {
+        name: "Hummus Crunch Me Softly",
+        desc: "Năut, usturoi, conopidă, vânătă, zucchini, cartofi, lămâie, ulei de măsline, ceapă roșie, baby spanac, tabasco, miere, mix semințe, Tahini, pâine.",
+        grams: "",
+        price: "38",
+      },
+      {
+        name: "Sandwich Cheesy Business",
+        desc: "Ciuperci, cedar, ceapă roșie, cremă de brânză, emmentaler, usturoi, unt 82%, sos soia, zahăr brun, cimbrișor, sare Maldon, pâine, bere Lager.",
+        grams: "280 gr",
+        price: "37",
+      },
+      {
+        name: "Sandwich Greek Freak",
+        desc: "Halloumi, măsline, vânătă, zucchini, ulei de măsline, lămâie, iaurt, ulei floarea soarelui, mentă, sare, piper, pâine.",
+        grams: "280 gr",
+        price: "37",
+      },
+      {
+        name: "Sandwich Nuts About Crudo",
+        desc: "Burrata, prosciutto crudo, Grana Padano, roșii, rucola, busuioc, alune de pădure, muguri pin, sare Maldon, pâine.",
+        grams: "280 gr",
+        price: "35",
+      },
+      {
+        name: "Sandwich Kiss My Cotto",
+        desc: "Prosciutto cotto, emmentaler, cremă de brânză, baby spanac, usturoi, sare, piper, sare Maldon, pâine.",
+        grams: "280 gr",
+        price: "35",
+      },
+    ],
+  },
+];
+
 function Index() {
   const [form, setForm] = useState({
     name: "",
@@ -219,6 +286,44 @@ function Index() {
               desc="Croissants, cakes and sweet treats baked to pair with your drink."
             />
           </div>
+        </div>
+      </section>
+
+      {/* Food menu */}
+      <section className="mx-auto max-w-4xl px-5 py-20">
+        <div className="text-center">
+          <p className="text-sm font-semibold uppercase tracking-wider text-primary">
+            The kitchen
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Food menu</h2>
+          <p className="mt-3 text-muted-foreground">Prices in Lei (L)</p>
+        </div>
+        <div className="mt-12 space-y-12">
+          {foodMenu.map((section) => (
+            <div key={section.group}>
+              <h3 className="border-b border-border pb-3 text-xl font-semibold text-primary">
+                {section.group}
+              </h3>
+              <ul className="mt-5 space-y-6">
+                {section.items.map((item) => (
+                  <li key={item.name} className="flex flex-col gap-1">
+                    <div className="flex items-baseline justify-between gap-4">
+                      <span className="font-display text-lg font-semibold">
+                        {item.name}
+                      </span>
+                      <span className="flex shrink-0 items-baseline gap-3 text-sm">
+                        {item.grams && (
+                          <span className="text-muted-foreground">{item.grams}</span>
+                        )}
+                        <span className="font-semibold text-primary">{item.price} L</span>
+                      </span>
+                    </div>
+                    <p className="max-w-2xl text-sm text-muted-foreground">{item.desc}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </section>
 
