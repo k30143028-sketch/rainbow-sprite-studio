@@ -58,67 +58,144 @@ const hours = [
 
 const foodMenu = [
   {
-    group: "Toasts",
+    group: "Brunch",
     items: [
       {
         name: "Toast Egg Me Up",
-        desc: "Grana Padano, rucola, roșii, lime, busuioc, baby spanac, muguri pin, muștar Dijon, miere, mix semințe, ouă, pâine, ulei de măsline.",
-        grams: "200 gr",
-        price: "44",
-      },
-      {
-        name: "Toast Feta Affair",
-        desc: "Ciuperci, feta oaie + capră, gălbenuș, unt 82%, lime, sos soia, mix semințe, tabasco, ouă, cimbrișor, sare Maldon, pâine, valeriană.",
-        grams: "220 gr",
-        price: "44",
-      },
-      {
-        name: "Toast Peach Perfect",
-        desc: "Burrata, piersici, prosciutto crudo, rucola, zahăr brun, Grana Padano, miere, busuioc, muguri pin, pâine, ulei de măsline, alune de pădure.",
-        grams: "170 gr",
+        desc: "Toast with arugula pesto, avocado paste, sun-dried tomatoes and pickled red onion. Served with two poached eggs.",
+        grams: "300 g",
         price: "44",
       },
       {
         name: "Toast The Royal",
-        desc: "Cremă de brânză, sfeclă prefiartă, somon afumat, unt 82%, capere, gălbenuș, lime, mărar, ouă, sare Maldon, tarhon uscat, pâine, smântână de gătit.",
-        grams: "220 gr",
+        desc: "Toast with beetroot cream cheese, smoked salmon, capers, pickled onion, served with two poached eggs and hollandaise sauce.",
+        grams: "300 gr",
         price: "44",
+      },
+      {
+        name: "Hummus Cum Vrea Bibi",
+        desc: "Bowl of hummus, salad mix with mustard dressing, carrot salad with soy sauce, pickled red onion, mixed seeds and halloumi. Served with a fried egg and toasted bread.",
+        grams: "400 g",
+        price: "45",
+      },
+      {
+        name: "Turkish Eggs",
+        desc: "Bowl of flavoured yogurt, spicy chorizo with butter and sun-dried tomatoes, mixed seeds with chives and two poached eggs. Served with toasted bread.",
+        grams: "300 g",
+        price: "44",
+      },
+      {
+        name: "Potato Crush",
+        desc: "Bowl of potatoes with butter and chives, crispy chorizo and feta cheese, served with a fried egg.",
+        grams: "300 g",
+        price: "44",
+      },
+      {
+        name: "Banana Bliss",
+        desc: "French toast with banana bread, vanilla ice cream, dulce de leche, caramelized banana and Maldon salt flakes.",
+        grams: "220 g",
+        price: "35",
+      },
+      {
+        name: "Sandvis Cum Vrea Stefi",
+        desc: "Sandwich with roasted garlic cream cheese, avocado paste, sun-dried tomatoes, pickled onion, an egg with gouda and prosciutto cotto. Served with salad mix and mustard dressing.",
+        grams: "350 g",
+        price: "40",
+      },
+      {
+        name: "Ham and Cheese",
+        desc: "Warm sandwich with cheese, prosciutto cotto, French mustard and spicy cornichons. Served with salad mix and mustard dressing.",
+        grams: "350 g",
+        price: "37",
+      },
+      {
+        name: "Tuna Melt",
+        desc: "Sandwich with arugula pesto and tuna in spicy mayo with red onion and chives. Served with salad mix and mustard dressing.",
+        grams: "350 g",
+        price: "37",
+      },
+      {
+        name: "Smoking Milano",
+        desc: "Sandwich with arugula pesto, gouda, Milano salami and a spicy roasted pepper mix. Served with salad mix and mustard dressing.",
+        grams: "350 g",
+        price: "37",
       },
     ],
   },
+];
+
+const drinksMenu = [
   {
-    group: "Sandwiches & Bowls",
+    group: "Coffee",
     items: [
-      {
-        name: "Hummus Crunch Me Softly",
-        desc: "Năut, usturoi, conopidă, vânătă, zucchini, cartofi, lămâie, ulei de măsline, ceapă roșie, baby spanac, tabasco, miere, mix semințe, Tahini, pâine.",
-        grams: "",
-        price: "38",
-      },
-      {
-        name: "Sandwich Cheesy Business",
-        desc: "Ciuperci, cedar, ceapă roșie, cremă de brânză, emmentaler, usturoi, unt 82%, sos soia, zahăr brun, cimbrișor, sare Maldon, pâine, bere Lager.",
-        grams: "280 gr",
-        price: "37",
-      },
-      {
-        name: "Sandwich Greek Freak",
-        desc: "Halloumi, măsline, vânătă, zucchini, ulei de măsline, lămâie, iaurt, ulei floarea soarelui, mentă, sare, piper, pâine.",
-        grams: "280 gr",
-        price: "37",
-      },
-      {
-        name: "Sandwich Nuts About Crudo",
-        desc: "Burrata, prosciutto crudo, Grana Padano, roșii, rucola, busuioc, alune de pădure, muguri pin, sare Maldon, pâine.",
-        grams: "280 gr",
-        price: "35",
-      },
-      {
-        name: "Sandwich Kiss My Cotto",
-        desc: "Prosciutto cotto, emmentaler, cremă de brânză, baby spanac, usturoi, sare, piper, sare Maldon, pâine.",
-        grams: "280 gr",
-        price: "35",
-      },
+      { name: "Espresso", desc: "", grams: "40 ml", price: "12" },
+      { name: "Americano", desc: "", grams: "120 ml", price: "12" },
+      { name: "Macchiato", desc: "", grams: "70 ml", price: "14" },
+      { name: "Cortado", desc: "", grams: "80 ml", price: "16" },
+      { name: "Cappuccino", desc: "", grams: "150 ml", price: "16" },
+      { name: "Flat White", desc: "", grams: "200 ml", price: "17" },
+      { name: "Latte", desc: "", grams: "280 ml", price: "19" },
+      { name: "Iced Latte", desc: "", grams: "280 ml", price: "19" },
+      { name: "Extra Shot", desc: "20 ml of espresso.", grams: "", price: "3" },
+      { name: "Plant-Based Milk", desc: "", grams: "", price: "3" },
+      { name: "Babyccino", desc: "Warm milk foam.", grams: "200 ml", price: "4" },
+      { name: "Extra Syrup", desc: "", grams: "15 ml", price: "3" },
+      { name: "Cold Brew", desc: "", grams: "200 ml", price: "20" },
+      { name: "Batch Brew", desc: "", grams: "200 ml", price: "20" },
+      { name: "V60", desc: "Not available on weekends.", grams: "250 ml", price: "30" },
+      { name: "Mont Blanc", desc: "Cold brew with orange-flavoured foam.", grams: "250 ml", price: "25" },
+      { name: "Cold Brew Tonic", desc: "", grams: "220 ml", price: "22" },
+    ],
+  },
+  {
+    group: "Specialty Drinks",
+    items: [
+      { name: "Matcha Latte", desc: "Served hot or cold.", grams: "280 ml", price: "28" },
+      { name: "Raspberry Matcha Latte", desc: "Served with ice.", grams: "220 ml", price: "30" },
+      { name: "Mango Matcha Latte", desc: "Served with ice.", grams: "220 ml", price: "30" },
+      { name: "Rosemary Salty Latte", desc: "Served hot or cold.", grams: "280 ml", price: "20" },
+      { name: "Chai Latte", desc: "", grams: "280 ml", price: "20" },
+      { name: "Specialty Tea", desc: "", grams: "300 ml", price: "18" },
+      { name: "Iced Tea", desc: "Peach Dream or Coconut Madness.", grams: "", price: "20" },
+      { name: "Blueberry Matcha Latte", desc: "Milk, matcha, homemade blueberry syrup infused with thyme, ice.", grams: "", price: "30" },
+    ],
+  },
+  {
+    group: "Cocktails",
+    items: [
+      { name: "Pornstar Martini", desc: "Vodka, passion fruit purée and lemon. Served with a shot of prosecco.", grams: "120 ml", price: "40" },
+      { name: "Amaretto Sour", desc: "Amaretto (or alcohol-free version), lemon juice, sugar syrup, ice, foamer. Also available alcohol-free.", grams: "100 ml", price: "37" },
+      { name: "Whisky Sour", desc: "Whisky, lemon juice, sugar syrup, bitters, foamer, ice.", grams: "100 ml", price: "37" },
+      { name: "Basil Sour", desc: "Gin, lemon juice, lemon, basil, sugar syrup.", grams: "100 ml", price: "37" },
+      { name: "Peanut Butter Sour", desc: "Peanut-butter-infused rum, lemon juice, sugar syrup.", grams: "100 ml", price: "37" },
+      { name: "Amerie Spritz", desc: "Strawberry liqueur, prosecco, soda water.", grams: "250 ml", price: "37" },
+      { name: "Nuts & Apple Spritz", desc: "Apple and chestnut liqueur, prosecco, soda water.", grams: "250 ml", price: "37" },
+      { name: "Aperol Spritz", desc: "Aperol, prosecco, soda water.", grams: "250 ml", price: "37" },
+      { name: "Sipping Rum, Tequila or Vodka", desc: "Any spirit available.", grams: "50 ml", price: "25" },
+      { name: "Negroni", desc: "Gin, bitter, vermouth.", grams: "100 ml", price: "37" },
+      { name: "Glass of Prosecco", desc: "", grams: "150 ml", price: "20" },
+      { name: "Glass of White Wine", desc: "", grams: "150 ml", price: "25" },
+      { name: "Gin & Tonic", desc: "Any gin available can be used.", grams: "250 ml", price: "37" },
+    ],
+  },
+  {
+    group: "Draft Beer",
+    items: [
+      { name: "Czech Lager Beer", desc: "", grams: "400 ml", price: "19" },
+      { name: "New England IPA Beer", desc: "", grams: "400 ml", price: "22" },
+      { name: "Artisanal Cola", desc: "", grams: "400 ml", price: "17" },
+      { name: "Tonic Water", desc: "", grams: "400 ml", price: "17" },
+    ],
+  },
+  {
+    group: "Non-Alcoholic",
+    items: [
+      { name: "Blueberry & Thyme Lemonade", desc: "Blueberry syrup infused with thyme.", grams: "400 ml", price: "25" },
+      { name: "Passion Fruit Lemonade", desc: "Lemon, passion fruit purée, mineral water.", grams: "400 ml", price: "25" },
+      { name: "Mango Lemonade", desc: "Lemon, mango purée, mineral water.", grams: "400 ml", price: "25" },
+      { name: "Papaya Smoothie", desc: "Apple juice, papaya, pineapple, mango.", grams: "300 ml", price: "27" },
+      { name: "Berry Glow Smoothie", desc: "Apple juice, pomegranate, blackcurrant and strawberries.", grams: "300 ml", price: "27" },
+      { name: "Alcohol-Free Gin & Tonic", desc: "Alcohol-free gin, tonic water.", grams: "250 ml", price: "37" },
     ],
   },
 ];
@@ -324,6 +401,48 @@ function Index() {
               </ul>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Drinks menu */}
+      <section className="bg-secondary/50 py-20">
+        <div className="mx-auto max-w-4xl px-5">
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-wider text-primary">
+              The bar
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Drinks menu</h2>
+            <p className="mt-3 text-muted-foreground">Prices in Lei (L)</p>
+          </div>
+          <div className="mt-12 space-y-12">
+            {drinksMenu.map((section) => (
+              <div key={section.group}>
+                <h3 className="border-b border-border pb-3 text-xl font-semibold text-primary">
+                  {section.group}
+                </h3>
+                <ul className="mt-5 space-y-6">
+                  {section.items.map((item) => (
+                    <li key={item.name} className="flex flex-col gap-1">
+                      <div className="flex items-baseline justify-between gap-4">
+                        <span className="font-display text-lg font-semibold">
+                          {item.name}
+                        </span>
+                        <span className="flex shrink-0 items-baseline gap-3 text-sm">
+                          {item.grams && (
+                            <span className="text-muted-foreground">{item.grams}</span>
+                          )}
+                          <span className="font-semibold text-primary">{item.price} L</span>
+                        </span>
+                      </div>
+                      {item.desc && (
+                        <p className="max-w-2xl text-sm text-muted-foreground">{item.desc}</p>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
