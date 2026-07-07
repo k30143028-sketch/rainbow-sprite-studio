@@ -51,9 +51,9 @@ const reviews = [
 ];
 
 const hours = [
-  { day: "Monday – Friday", time: "08:00 – 22:00" },
-  { day: "Saturday", time: "09:00 – 22:00" },
-  { day: "Sunday", time: "09:00 – 22:00" },
+  { day: "Monday – Friday", time: "08:00 – 21:00" },
+  { day: "Saturday", time: "09:00 – 21:00" },
+  { day: "Sunday", time: "09:00 – 21:00" },
 ];
 
 function Index() {
