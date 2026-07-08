@@ -4,8 +4,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Heart, MapPin, Utensils, Bike, Sparkles, CalendarHeart } from "lucide-react";
 
 import couple1 from "@/assets/couple-1.jpg.asset.json";
-import couple2 from "@/assets/couple-2.jpg.asset.json";
-
+import couple2 from "@/assets/0164300D-0198-4184-98AF-273CD9A9376D.jpeg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
