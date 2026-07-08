@@ -202,8 +202,8 @@ function LovePage() {
                 transition={{ duration: 0.5 }}
                 className={`relative pl-12 sm:w-1/2 sm:pl-0 ${
                   i % 2 === 0
-                    ? "sm:pr-10 sm:text-right"
-                    : "sm:ml-auto sm:pl-10"
+                    ? "sm:pr-12 sm:text-right"
+                    : "sm:ml-auto sm:pl-12"
                 }`}
               >
                 <span
