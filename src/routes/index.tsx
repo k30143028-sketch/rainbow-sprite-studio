@@ -207,8 +207,8 @@ function InvitePage() {
   alt="Костя и Ксю"
   className="aspect-[3/4] w-full object-cover"
 />
-/>
-                />
+
+              
               </motion.figure>
 
               <Heart className="mx-auto mt-8 h-8 w-8 fill-primary text-primary" />
