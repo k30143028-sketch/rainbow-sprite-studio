@@ -202,10 +202,11 @@ function InvitePage() {
                 transition={{ delay: 0.1, duration: 0.6 }}
                 className="mx-auto w-56 overflow-hidden rounded-3xl shadow-[var(--shadow-warm)] sm:w-64"
               >
-                <img
+               <img
   src={couple2}
   alt="Костя и Ксю"
   className="aspect-[3/4] w-full object-cover"
+/>
 />
                 />
               </motion.figure>
