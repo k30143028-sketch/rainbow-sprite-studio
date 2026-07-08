@@ -204,9 +204,10 @@ function InvitePage() {
                 className="mx-auto w-56 overflow-hidden rounded-3xl shadow-[var(--shadow-warm)] sm:w-64"
               >
                 <img
-                  src={couple2.url}
-                  alt="Костя и Ксю"
-                  className="aspect-[3/4] w-full object-cover"
+  src={couple2}
+  alt="Костя и Ксю"
+  className="aspect-[3/4] w-full object-cover"
+/>
                 />
               </motion.figure>
 
