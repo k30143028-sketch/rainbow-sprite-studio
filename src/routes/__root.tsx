@@ -77,18 +77,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Freya & Friends — Cozy Café in Brașov" },
+      { title: "Костя & Ксю — наша история любви" },
       {
         name: "description",
         content:
-          "Freya & Friends is a cosy neighbourhood café in Brașov serving great coffee, cocktails and pastries. Reserve your table online.",
+          "Маленький сайт о нас двоих: сколько дней мы вместе, наши фото и наша история любви.",
       },
-      { name: "author", content: "Freya & Friends" },
-      { property: "og:title", content: "Freya & Friends — Cozy Café in Brașov" },
+      { name: "author", content: "Костя & Ксю" },
+      { property: "og:title", content: "Костя & Ксю — наша история любви" },
       {
         property: "og:description",
-        content:
-          "Great coffee, warm atmosphere and friendly baristas. Reserve your table at Freya & Friends in Brașov.",
+        content: "Сколько дней мы вместе, наши фото и наша история любви.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
