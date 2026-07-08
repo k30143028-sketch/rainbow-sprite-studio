@@ -1,25 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import { motion } from "motion/react";
-import { Heart } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Heart, MapPin, Utensils, Bike, Sparkles, CalendarHeart } from "lucide-react";
 
 import couple1 from "@/assets/couple-1.jpg.asset.json";
 import couple2 from "@/assets/couple-2.jpg.asset.json";
-import couple3 from "@/assets/couple-3.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Костя & Ксю — наша история любви" },
+      { title: "Ксю приглашает тебя на свидание" },
       {
         name: "description",
-        content:
-          "Маленький сайт о нас двоих: сколько дней мы вместе, наши фотографии, наша история и всё, за что я тебя люблю.",
+        content: "Костя, у меня к тебе один вопрос...",
       },
-      { property: "og:title", content: "Костя & Ксю — наша история любви" },
+      { property: "og:title", content: "Ксю приглашает тебя на свидание" },
       {
         property: "og:description",
-        content: "Сколько дней мы вместе, наши фото и наша история любви.",
+        content: "Костя, у меня к тебе один вопрос...",
       },
       { property: "og:type", content: "website" },
       { property: "og:image", content: couple1.url },
@@ -27,325 +25,310 @@ export const Route = createFileRoute("/")({
       { name: "twitter:image", content: couple1.url },
     ],
   }),
-  component: LovePage,
+  component: InvitePage,
 });
 
-// День, когда всё началось
-const START_DATE = new Date("2024-12-23T00:00:00");
+type Step = "ask" | "activity" | "schedule" | "done";
 
-type Elapsed = {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-};
-
-function useElapsed(from: Date): Elapsed {
-  const [now, setNow] = useState(() => Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  return useMemo(() => {
-    const diff = Math.max(0, now - from.getTime());
-    const seconds = Math.floor(diff / 1000);
-    return {
-      days: Math.floor(seconds / 86400),
-      hours: Math.floor((seconds % 86400) / 3600),
-      minutes: Math.floor((seconds % 3600) / 60),
-      seconds: seconds % 60,
-    };
-  }, [now, from]);
-}
+const activities = [
+  {
+    id: "walk",
+    label: "Погулять",
+    desc: "Просто пройтись вдвоём, куда глаза глядят.",
+    icon: MapPin,
+  },
+  {
+    id: "venue",
+    label: "Заведение",
+    desc: "Кафе, ресторан или бар — выберем вместе.",
+    icon: Utensils,
+  },
+  {
+    id: "active",
+    label: "Активный отдых",
+    desc: "Что-то энергичное и весёлое.",
+    icon: Bike,
+  },
+];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -24 },
 };
 
-const photos = [
-  { src: couple2.url, alt: "Костя и Ксю, нос к носу", tall: true },
-  { src: couple1.url, alt: "Костя и Ксю у зеркала" },
-  { src: couple3.url, alt: "Костя и Ксю дурачатся" },
-];
+function InvitePage() {
+  const [step, setStep] = useState<Step>("ask");
+  const [activity, setActivity] = useState<string | null>(null);
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
 
-const story = [
-  {
-    date: "23 декабря 2024",
-    title: "Наш первый день",
-    text: "День, с которого всё началось. С тех пор я считаю каждый рассвет вместе с тобой.",
-  },
-  {
-    date: "Каждое утро",
-    title: "Доброе утро",
-    text: "Просыпаться рядом с тобой — лучшее, что случилось со мной.",
-  },
-  {
-    date: "Каждый вечер",
-    title: "Спокойной ночи",
-    text: "И засыпать, зная, что завтра снова будешь ты.",
-  },
-  {
-    date: "Сегодня",
-    title: "И дальше",
-    text: "Столько дней позади, а впереди — вся жизнь. Я выбираю тебя снова и снова.",
-  },
-];
-
-const reasons = [
-  "Твоя улыбка делает любой день светлее",
-  "Рядом с тобой я чувствую себя дома",
-  "Ты смеёшься над моими глупыми шутками",
-  "Мы можем молчать вместе — и это не неловко",
-  "Ты обнимаешь так, что весь мир замирает",
-  "С тобой даже обычный вторник — праздник",
-];
-
-function LovePage() {
-  const t = useElapsed(START_DATE);
+  const chosenActivity = activities.find((a) => a.id === activity);
 
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      {/* HERO */}
-      <section className="relative flex min-h-screen flex-col items-center justify-center px-6 py-20 text-center">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-70"
-          style={{ background: "var(--gradient-soft)" }}
-        />
-        <FloatingHearts />
-        <div className="relative z-10 flex flex-col items-center">
-          <motion.div
-            initial={{ scale: 0, rotate: -20 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 120, damping: 12 }}
-            className="mb-6 flex h-16 w-16 items-center justify-center rounded-full text-primary-foreground shadow-[var(--shadow-warm)]"
-            style={{ background: "var(--gradient-warm)" }}
-          >
-            <Heart className="h-8 w-8 fill-current" />
-          </motion.div>
+    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6 py-16 text-foreground">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-70"
+        style={{ background: "var(--gradient-soft)" }}
+      />
+      <FloatingHearts />
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-sm uppercase tracking-[0.35em] text-muted-foreground"
-          >
-            наша маленькая вселенная
-          </motion.p>
+      <div className="relative z-10 w-full max-w-xl">
+        <AnimatePresence mode="wait">
+          {step === "ask" && (
+            <AskStep key="ask" onYes={() => setStep("activity")} />
+          )}
 
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.7 }}
-            className="mt-4 font-display text-6xl font-semibold leading-none sm:text-7xl md:text-8xl"
-          >
-            Костя
-            <span className="mx-3 text-primary">&amp;</span>
-            Ксю
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-6 max-w-md text-lg text-muted-foreground"
-          >
-            Два человека, одна история. И она становится длиннее с каждой секундой.
-          </motion.p>
-
-          <CounterCard t={t} />
-        </div>
-      </section>
-
-      {/* GALLERY */}
-      <Section title="Мы" kicker="галерея">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {photos.map((p, i) => (
-            <motion.figure
-              key={p.src}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className={`group relative overflow-hidden rounded-3xl shadow-[var(--shadow-soft)] ${
-                p.tall ? "sm:row-span-2" : ""
-              }`}
-            >
-              <img
-                src={p.src}
-                alt={p.alt}
-                loading="lazy"
-                className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${
-                  p.tall ? "aspect-[3/4] sm:h-full" : "aspect-square"
-                }`}
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            </motion.figure>
-          ))}
-        </div>
-      </Section>
-
-      {/* STORY TIMELINE */}
-      <Section title="Наша история" kicker="как всё было">
-        <div className="relative mx-auto max-w-2xl">
-          <div className="absolute left-4 top-2 bottom-2 w-px bg-border sm:left-1/2" />
-          <div className="space-y-10">
-            {story.map((s, i) => (
-              <motion.div
-                key={s.title}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.5 }}
-                className={`relative pl-12 sm:w-1/2 sm:pl-0 ${
-                  i % 2 === 0
-                    ? "sm:pr-12 sm:text-right"
-                    : "sm:ml-auto sm:pl-12"
-                }`}
-              >
-                <span
-                  className={`absolute top-1 flex h-4 w-4 items-center justify-center rounded-full ring-4 ring-background left-[9px] sm:left-auto ${
-                    i % 2 === 0 ? "sm:-right-2" : "sm:-left-2"
-                  }`}
-                  style={{ background: "var(--gradient-warm)" }}
-                />
-                <p className="text-xs uppercase tracking-widest text-primary">
-                  {s.date}
-                </p>
-                <h3 className="mt-1 font-display text-2xl font-semibold">
-                  {s.title}
-                </h3>
-                <p className="mt-2 text-muted-foreground">{s.text}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* REASONS */}
-      <Section title="За что я тебя люблю" kicker="а причин много">
-        <div className="grid gap-4 sm:grid-cols-2">
-          {reasons.map((r, i) => (
+          {step === "activity" && (
             <motion.div
-              key={r}
+              key="activity"
               variants={fadeUp}
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="flex items-start gap-3 rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-soft)]"
+              animate="show"
+              exit="exit"
+              transition={{ duration: 0.4 }}
+              className="text-center"
             >
-              <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-primary text-primary" />
-              <p className="text-card-foreground">{r}</p>
-            </motion.div>
-          ))}
-        </div>
-      </Section>
+              <Kicker>шаг 1 из 2</Kicker>
+              <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
+                Чем займёмся?
+              </h2>
+              <p className="mt-3 text-muted-foreground">
+                Выбери, что тебе больше по душе.
+              </p>
 
-      {/* FOOTER LOVE NOTE */}
-      <footer className="relative px-6 py-24 text-center">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-60"
-          style={{ background: "var(--gradient-soft)" }}
-        />
-        <div className="relative z-10 mx-auto max-w-xl">
-          <Heart className="mx-auto h-10 w-10 fill-primary text-primary" />
-          <p className="mt-6 font-display text-3xl font-semibold sm:text-4xl">
-            Я люблю тебя, Ксю
-          </p>
-          <p className="mt-4 text-muted-foreground">
-            Спасибо, что ты есть. За {t.days} дней ты стала моим самым любимым
-            человеком — и это только начало.
-          </p>
-          <p className="mt-8 text-sm uppercase tracking-[0.3em] text-muted-foreground">
-            навсегда твой, Костя
-          </p>
-        </div>
-      </footer>
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                {activities.map((a) => (
+                  <button
+                    key={a.id}
+                    onClick={() => {
+                      setActivity(a.id);
+                      setStep("schedule");
+                    }}
+                    className="group flex flex-col items-center gap-3 rounded-3xl border border-border bg-card p-6 text-center shadow-[var(--shadow-soft)] transition-transform hover:-translate-y-1 hover:shadow-[var(--shadow-warm)]"
+                  >
+                    <span
+                      className="flex h-12 w-12 items-center justify-center rounded-full text-primary-foreground"
+                      style={{ background: "var(--gradient-warm)" }}
+                    >
+                      <a.icon className="h-6 w-6" />
+                    </span>
+                    <span className="font-display text-lg font-semibold">
+                      {a.label}
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      {a.desc}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {step === "schedule" && (
+            <motion.div
+              key="schedule"
+              variants={fadeUp}
+              initial="hidden"
+              animate="show"
+              exit="exit"
+              transition={{ duration: 0.4 }}
+              className="text-center"
+            >
+              <Kicker>шаг 2 из 2</Kicker>
+              <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
+                Когда тебе удобно?
+              </h2>
+              <p className="mt-3 text-muted-foreground">
+                Выбрал(а): <span className="text-primary">{chosenActivity?.label}</span>.
+                Напиши дату и время.
+              </p>
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setStep("done");
+                }}
+                className="mt-10 mx-auto flex max-w-sm flex-col gap-4 rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-soft)]"
+              >
+                <label className="flex flex-col gap-2 text-left">
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Дата
+                  </span>
+                  <input
+                    required
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className="rounded-xl border border-border bg-background px-4 py-3 text-foreground outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </label>
+                <label className="flex flex-col gap-2 text-left">
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Время
+                  </span>
+                  <input
+                    required
+                    type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    className="rounded-xl border border-border bg-background px-4 py-3 text-foreground outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </label>
+                <button
+                  type="submit"
+                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold text-primary-foreground shadow-[var(--shadow-warm)] transition-transform hover:scale-105"
+                  style={{ background: "var(--gradient-warm)" }}
+                >
+                  <CalendarHeart className="h-5 w-5" />
+                  Подтвердить
+                </button>
+              </form>
+            </motion.div>
+          )}
+
+          {step === "done" && (
+            <motion.div
+              key="done"
+              variants={fadeUp}
+              initial="hidden"
+              animate="show"
+              exit="exit"
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <motion.figure
+                initial={{ scale: 0.85, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+                className="mx-auto w-56 overflow-hidden rounded-3xl shadow-[var(--shadow-warm)] sm:w-64"
+              >
+                <img
+                  src={couple2.url}
+                  alt="Костя и Ксю"
+                  className="aspect-[3/4] w-full object-cover"
+                />
+              </motion.figure>
+
+              <Heart className="mx-auto mt-8 h-8 w-8 fill-primary text-primary" />
+              <h2 className="mt-4 font-display text-3xl font-semibold sm:text-4xl">
+                Ура, договорились!
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                {chosenActivity?.label} — {formatDate(date)} в {time}.
+                <br />
+                Жду не дождусь.
+              </p>
+              <p className="mt-8 text-sm uppercase tracking-[0.3em] text-muted-foreground">
+                с любовью, Ксю
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </main>
   );
 }
 
-function CounterCard({ t }: { t: Elapsed }) {
-  const units = [
-    { label: "дней", value: t.days },
-    { label: "часов", value: t.hours },
-    { label: "минут", value: t.minutes },
-    { label: "секунд", value: t.seconds },
+function AskStep({ onYes }: { onYes: () => void }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [noPos, setNoPos] = useState({ x: 0, y: 0 });
+  const [dodges, setDodges] = useState(0);
+
+  const dodge = () => {
+    const bounds = containerRef.current?.getBoundingClientRect();
+    const rangeX = bounds ? Math.min(bounds.width / 2 - 40, 140) : 120;
+    const rangeY = bounds ? Math.min(bounds.height / 2 - 30, 90) : 70;
+    const x = (Math.random() * 2 - 1) * rangeX;
+    const y = (Math.random() * 2 - 1) * rangeY;
+    setNoPos({ x, y });
+    setDodges((d) => d + 1);
+  };
+
+  const noHints = [
+    "Не, серьёзно?",
+    "Ты уверен?",
+    "Точно-точно?",
+    "Даже не думай)",
+    "Так не пойдёт",
+    "Ладно, я поняла — да",
   ];
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.7, duration: 0.6 }}
-      className="mt-10 rounded-3xl border border-border bg-card/80 p-6 shadow-[var(--shadow-warm)] backdrop-blur"
+      variants={fadeUp}
+      initial="hidden"
+      animate="show"
+      exit="exit"
+      transition={{ duration: 0.4 }}
+      className="text-center"
     >
-      <p className="mb-4 text-sm uppercase tracking-[0.3em] text-muted-foreground">
-        вместе уже
-      </p>
-      <div className="flex items-stretch gap-3 sm:gap-5">
-        {units.map((u, i) => (
-          <div key={u.label} className="flex items-center gap-3 sm:gap-5">
-            <div className="flex min-w-[60px] flex-col items-center sm:min-w-[76px]">
-              <span className="font-display text-4xl font-semibold tabular-nums text-primary sm:text-5xl">
-                {String(u.value).padStart(2, "0")}
-              </span>
-              <span className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">
-                {u.label}
-              </span>
-            </div>
-            {i < units.length - 1 && (
-              <span className="font-display text-3xl text-border sm:text-4xl">
-                :
-              </span>
-            )}
-          </div>
-        ))}
+      <motion.div
+        initial={{ scale: 0, rotate: -20 }}
+        animate={{ scale: 1, rotate: 0 }}
+        transition={{ type: "spring", stiffness: 120, damping: 12 }}
+        className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full text-primary-foreground shadow-[var(--shadow-warm)]"
+        style={{ background: "var(--gradient-warm)" }}
+      >
+        <Sparkles className="h-8 w-8" />
+      </motion.div>
+
+      <Kicker>Костя, у меня к тебе вопрос</Kicker>
+      <h1 className="mt-4 font-display text-5xl font-semibold leading-tight sm:text-6xl">
+        Свидание?
+      </h1>
+
+      <div
+        ref={containerRef}
+        className="relative mx-auto mt-12 flex h-40 max-w-md items-center justify-center gap-6"
+      >
+        <button
+          onClick={onYes}
+          className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 font-semibold text-primary-foreground shadow-[var(--shadow-warm)] transition-transform hover:scale-105"
+          style={{ background: "var(--gradient-warm)" }}
+        >
+          <Heart className="h-5 w-5 fill-current" />
+          Да
+        </button>
+
+        <motion.button
+          type="button"
+          onMouseEnter={dodge}
+          onClick={dodge}
+          animate={{ x: noPos.x, y: noPos.y }}
+          transition={{ type: "spring", stiffness: 300, damping: 18 }}
+          className="rounded-full border border-border bg-card px-8 py-4 font-semibold text-card-foreground shadow-[var(--shadow-soft)]"
+        >
+          {dodges === 0 ? "Нет" : noHints[Math.min(dodges - 1, noHints.length - 1)]}
+        </motion.button>
       </div>
     </motion.div>
   );
 }
 
-function Section({
-  title,
-  kicker,
-  children,
-}: {
-  title: string;
-  kicker: string;
-  children: React.ReactNode;
-}) {
+function Kicker({ children }: { children: React.ReactNode }) {
   return (
-    <section className="mx-auto max-w-5xl px-6 py-20">
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.5 }}
-        className="mb-10 text-center"
-      >
-        <p className="text-sm uppercase tracking-[0.35em] text-primary">
-          {kicker}
-        </p>
-        <h2 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">
-          {title}
-        </h2>
-      </motion.div>
+    <p className="text-sm uppercase tracking-[0.35em] text-primary">
       {children}
-    </section>
+    </p>
   );
+}
+
+function formatDate(value: string) {
+  if (!value) return "";
+  const d = new Date(`${value}T00:00:00`);
+  return d.toLocaleDateString("ru-RU", {
+    day: "numeric",
+    month: "long",
+  });
 }
 
 function FloatingHearts() {
   const hearts = useMemo(
     () =>
-      Array.from({ length: 12 }).map((_, i) => ({
+      Array.from({ length: 10 }).map((_, i) => ({
         id: i,
-        left: `${(i * 8.3 + 4) % 100}%`,
+        left: `${(i * 9.7 + 4) % 100}%`,
         delay: (i % 6) * 0.8,
         duration: 8 + (i % 5),
         size: 12 + (i % 4) * 6,
@@ -357,7 +340,7 @@ function FloatingHearts() {
       {hearts.map((h) => (
         <motion.div
           key={h.id}
-          className="absolute text-primary/30"
+          className="absolute text-primary/25"
           style={{ left: h.left, bottom: -40 }}
           animate={{ y: [-20, -640], opacity: [0, 0.8, 0] }}
           transition={{
